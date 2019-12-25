@@ -34,6 +34,7 @@ class _QuizzPageState extends State<QuizzPage> {
     'Approximately one quarter of human bones are on the feet',
     'A slug\'s blood is green',
   ];
+  List<bool> answers = [true, true, false];
   int counter = 0;
   @override
   Widget build(BuildContext context) {
@@ -88,8 +89,12 @@ class _QuizzPageState extends State<QuizzPage> {
           ),
           onPressed: () {
             setState(() {
-              scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-              counter++;
+              if (answers[counter] == true) {
+                counter++;
+                scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+              } else {
+                scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+              }
             });
           },
         ),
@@ -108,7 +113,16 @@ class _QuizzPageState extends State<QuizzPage> {
             'False',
             style: TextStyle(fontSize: 20),
           ),
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              if (answers[counter] == false) {
+                counter++;
+                scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+              } else {
+                scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+              }
+            });
+          },
         ),
       ),
     );
