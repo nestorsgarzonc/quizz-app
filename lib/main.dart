@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quizz_app/question.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,12 +30,15 @@ class QuizzPage extends StatefulWidget {
 
 class _QuizzPageState extends State<QuizzPage> {
   List<Widget> scoreKeeper = [];
-  List<String> questions = [
-    'You can lead a cow down stairs but not up stairs',
-    'Approximately one quarter of human bones are on the feet',
-    'A slug\'s blood is green',
+
+  List<Question> questions = [
+    Question(q: 'You can lead a cow down stairs but not up stairs', a: true),
+    Question(
+        q: 'Approximately one quarter of human bones are on the feet',
+        a: false),
+    Question(q: 'A slug\'s blood is green', a: true),
   ];
-  List<bool> answers = [true, true, false];
+
   int counter = 0;
   @override
   Widget build(BuildContext context) {
@@ -65,7 +69,7 @@ class _QuizzPageState extends State<QuizzPage> {
         padding: EdgeInsets.all(10),
         child: Center(
           child: Text(
-            questions[counter],
+            questions[counter].question,
             textAlign: TextAlign.center,
             style: GoogleFonts.openSans(
               textStyle: TextStyle(fontSize: 28, color: Colors.white),
@@ -89,7 +93,7 @@ class _QuizzPageState extends State<QuizzPage> {
           ),
           onPressed: () {
             setState(() {
-              if (answers[counter] == true) {
+              if (questions[counter].answer == true) {
                 counter++;
                 scoreKeeper.add(Icon(Icons.check, color: Colors.green));
               } else {
@@ -115,7 +119,7 @@ class _QuizzPageState extends State<QuizzPage> {
           ),
           onPressed: () {
             setState(() {
-              if (answers[counter] == false) {
+              if (questions[counter].answer == false) {
                 counter++;
                 scoreKeeper.add(Icon(Icons.check, color: Colors.green));
               } else {
