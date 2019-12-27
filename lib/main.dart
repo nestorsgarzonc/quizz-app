@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quizz_app/question.dart';
+import 'package:quizz_app/quizz_brain.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,16 +30,8 @@ class QuizzPage extends StatefulWidget {
 
 class _QuizzPageState extends State<QuizzPage> {
   List<Widget> scoreKeeper = [];
+  QuizBrain quizBrain = QuizBrain();
 
-  List<Question> questions = [
-    Question(q: 'You can lead a cow down stairs but not up stairs', a: true),
-    Question(
-        q: 'Approximately one quarter of human bones are on the feet',
-        a: false),
-    Question(q: 'A slug\'s blood is green', a: true),
-  ];
-
-  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -69,7 +61,7 @@ class _QuizzPageState extends State<QuizzPage> {
         padding: EdgeInsets.all(10),
         child: Center(
           child: Text(
-            questions[counter].question,
+            quizBrain.getCuestionText(),
             textAlign: TextAlign.center,
             style: GoogleFonts.openSans(
               textStyle: TextStyle(fontSize: 28, color: Colors.white),
@@ -93,8 +85,8 @@ class _QuizzPageState extends State<QuizzPage> {
           ),
           onPressed: () {
             setState(() {
-              if (questions[counter].answer == true) {
-                counter++;
+              if (quizBrain.getAnswer() == true) {
+                quizBrain.nextQuestion();
                 scoreKeeper.add(Icon(Icons.check, color: Colors.green));
               } else {
                 scoreKeeper.add(Icon(Icons.close, color: Colors.red));
@@ -119,8 +111,8 @@ class _QuizzPageState extends State<QuizzPage> {
           ),
           onPressed: () {
             setState(() {
-              if (questions[counter].answer == false) {
-                counter++;
+              if (quizBrain.getAnswer() == false) {
+                quizBrain.nextQuestion();
                 scoreKeeper.add(Icon(Icons.check, color: Colors.green));
               } else {
                 scoreKeeper.add(Icon(Icons.close, color: Colors.red));
