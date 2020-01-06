@@ -29,7 +29,9 @@ class QuizzPage extends StatefulWidget {
 }
 
 class _QuizzPageState extends State<QuizzPage> {
-  List<Widget> scoreKeeper = [];
+  List<Widget> scoreKeeper = [
+    Icon(Icons.keyboard_arrow_right, color: Colors.white)
+  ];
   QuizBrain quizBrain = QuizBrain();
 
   @override
@@ -39,11 +41,11 @@ class _QuizzPageState extends State<QuizzPage> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         _question(),
-        _trueButton(),
+        _button(true),
         SizedBox(
           height: 10,
         ),
-        _falseButton(),
+        _button(false),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
@@ -52,6 +54,17 @@ class _QuizzPageState extends State<QuizzPage> {
         )
       ],
     );
+  }
+
+  void checkAnswer(bool userPickedAnswer) {
+    setState(() {
+      if (quizBrain.getAnswer() == userPickedAnswer) {
+        quizBrain.nextQuestion();
+        scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+      } else {
+        scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+      }
+    });
   }
 
   Widget _question() {
@@ -72,53 +85,24 @@ class _QuizzPageState extends State<QuizzPage> {
     );
   }
 
-  Widget _trueButton() {
+  Widget _button(bool sign) {
+    String text = 'False';
+    Color color = Colors.red;
+    if (sign) {
+      text = 'True';
+      color = Colors.green;
+    }
     return Expanded(
       child: Padding(
         padding: EdgeInsets.all(10),
         child: FlatButton(
-          color: Colors.green,
+          color: color,
           textColor: Colors.white,
           child: Text(
-            'True',
+            text,
             style: TextStyle(fontSize: 20),
           ),
-          onPressed: () {
-            setState(() {
-              if (quizBrain.getAnswer() == true) {
-                quizBrain.nextQuestion();
-                scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-              } else {
-                scoreKeeper.add(Icon(Icons.close, color: Colors.red));
-              }
-            });
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _falseButton() {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: FlatButton(
-          color: Colors.red,
-          textColor: Colors.white,
-          child: Text(
-            'False',
-            style: TextStyle(fontSize: 20),
-          ),
-          onPressed: () {
-            setState(() {
-              if (quizBrain.getAnswer() == false) {
-                quizBrain.nextQuestion();
-                scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-              } else {
-                scoreKeeper.add(Icon(Icons.close, color: Colors.red));
-              }
-            });
-          },
+          onPressed: () => checkAnswer(sign),
         ),
       ),
     );
