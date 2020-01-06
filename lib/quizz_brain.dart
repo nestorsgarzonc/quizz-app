@@ -3,11 +3,13 @@ import 'package:quizz_app/question.dart';
 class QuizBrain {
   int _counter = 0;
   List<Question> _questions = [
-    Question(q: 'You can lead a cow down stairs but not up stairs', a: true),
     Question(
-        q: 'Approximately one quarter of human bones are on the feet',
-        a: false),
-    Question(q: 'A slug\'s blood is green', a: true),
+        question: 'You can lead a cow down stairs but not up stairs',
+        answer: true),
+    Question(
+        question: 'Approximately one quarter of human bones are on the feet',
+        answer: false),
+    Question(question: 'A slug\'s blood is green', answer: true),
   ];
 
   String getCuestionText() {
@@ -21,13 +23,11 @@ class QuizBrain {
   void nextQuestion() {
     if (_counter < _questions.length - 1) {
       _counter++;
-    }else{
-      
-    }
+    } else {}
   }
 
-  bool hasMore(){
-    if(_counter>=_questions.length-1){
+  bool hasMore() {
+    if (_counter >= _questions.length - 1) {
       return false;
     }
     return true;
