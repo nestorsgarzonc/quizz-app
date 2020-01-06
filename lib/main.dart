@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quizz_app/quizz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(MyApp());
 
@@ -61,8 +62,14 @@ class _QuizzPageState extends State<QuizzPage> {
       if (quizBrain.getAnswer() == userPickedAnswer) {
         quizBrain.nextQuestion();
         scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+        if (quizBrain.hasMore() == false) {
+          Alert(context: context, title: "Finish", desc: "You're awesome!.")
+              .show();
+        }
       } else {
         scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+        Alert(context: context, title: "Bad", desc: "Try again!.").show();
+        scoreKeeper.clear();
       }
     });
   }

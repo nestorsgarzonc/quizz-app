@@ -21,7 +21,16 @@ class QuizBrain {
   void nextQuestion() {
     if (_counter < _questions.length - 1) {
       _counter++;
+    }else{
+      
     }
+  }
+
+  bool hasMore(){
+    if(_counter>=_questions.length-1){
+      return false;
+    }
+    return true;
   }
 
   int getCounter() {
